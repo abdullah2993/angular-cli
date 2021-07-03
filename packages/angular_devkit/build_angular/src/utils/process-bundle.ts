@@ -24,7 +24,7 @@ import * as fs from 'fs';
 import * as path from 'path';
 import { minify } from 'terser';
 import { workerData } from 'worker_threads';
-import { allowMangle, allowMinify, shouldBeautify } from './environment-options';
+import { allowMangle, allowMinify, keepClassNames, shouldBeautify } from './environment-options';
 import { I18nOptions } from './i18n-options';
 
 type LocalizeUtilities = typeof import('@angular/localize/src/tools/src/source_file_utils');
@@ -269,6 +269,7 @@ async function terserMangle(
     compress: allowMinify && !!options.compress,
     ecma: options.ecma || 5,
     mangle: allowMangle,
+    keep_classnames: keepClassNames,
     safari10: true,
     format: {
       ascii_only: true,

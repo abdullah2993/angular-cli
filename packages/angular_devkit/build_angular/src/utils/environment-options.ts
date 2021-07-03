@@ -28,6 +28,7 @@ const debugOptimize = (() => {
       mangle: true,
       minify: true,
       beautify: false,
+      keepClassNames: false,
     };
   }
 
@@ -35,6 +36,7 @@ const debugOptimize = (() => {
     mangle: false,
     minify: false,
     beautify: true,
+    keepClassNames: true,
   };
 
   if (isEnabled(debugOptimizeVariable)) {
@@ -52,6 +54,8 @@ const debugOptimize = (() => {
       case 'beautify':
         debugValue.beautify = true;
         break;
+      case 'keepClassNames':
+        debugValue.keepClassNames = true;
     }
   }
 
@@ -62,6 +66,11 @@ const mangleVariable = process.env['NG_BUILD_MANGLE'];
 export const allowMangle = isPresent(mangleVariable)
   ? !isDisabled(mangleVariable)
   : debugOptimize.mangle;
+
+const keepClassNamesVariable = process.env['NG_KEEP_CLASSNAMES'];
+export const keepClassNames = isPresent(keepClassNamesVariable)
+  ? isEnabled(keepClassNamesVariable)
+  : debugOptimize.keepClassNames;
 
 export const shouldBeautify = debugOptimize.beautify;
 export const allowMinify = debugOptimize.minify;
